@@ -9,26 +9,19 @@ env:
     # - HUB_PASSWORD=
     # - REPO_NAME=
     - COMMIT=${TRAVIS_COMMIT:0:8}
-    - CACHE_FILE=$HOME/.docker-cache/images.tar.gz
-
-cache:
-  directories:
-    - $HOME/.docker-cache
 
 before_install:
-  - if [ -f $CACHE_FILE ]; then gunzip -c $CACHE_FILE | docker load; fi
+  - docker pull $REPO_NAME/mail:latest
+  - docker pull $REPO_NAME/mail:debug
 
 script:
-  - docker build -t mail:latest -f $TRAVIS_BUILD_DIR/latest/Dockerfile   $TRAVIS_BUILD_DIR
-  - docker build -t mail:debug  -f $TRAVIS_BUILD_DIR/debug/Dockerfile    $TRAVIS_BUILD_DIR
+  - docker build -t mail:latest --cache-from=$REPO_NAME/mail:latest -f $TRAVIS_BUILD_DIR/latest/Dockerfile   $TRAVIS_BUILD_DIR
+  - docker build -t mail:debug  --cache-from=$REPO_NAME/mail:debug  -f $TRAVIS_BUILD_DIR/debug/Dockerfile    $TRAVIS_BUILD_DIR
 
   - docker tag  mail:latest   $REPO_NAME/mail:latest
   - docker tag  mail:latest   $REPO_NAME/mail:$COMMIT
   - docker tag  mail:debug    $REPO_NAME/mail:debug
   - docker tag  mail:debug    $REPO_NAME/mail:debug-$COMMIT
-
-before_cache:
-  - $TRAVIS_BUILD_DIR/.travis/cache.sh
 
 before_deploy:
   - echo "$HUB_PASSWORD" | docker login --username "$HUB_LOGIN" --password-stdin
