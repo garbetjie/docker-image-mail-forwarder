@@ -5,6 +5,9 @@ header_size_limit = 4096000
 alias_maps = hash:/etc/postfix/aliases
 compatibility_level = 2
 smtputf8_enable = no
+append_at_myorigin = yes
+myorigin = $mydomain
+mydomain =
 
 # Interface binding, and authorized networks.
 inet_interfaces = all

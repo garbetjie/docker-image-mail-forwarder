@@ -1,3 +1,0 @@
-#!/usr/bin/execlineb -P
-
-exec /usr/local/bin/mailhog -api-bind-addr=0.0.0.0:80 -ui-bind-addr=0.0.0.0:80
