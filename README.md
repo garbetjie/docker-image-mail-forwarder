@@ -1,7 +1,7 @@
 Docker images for Mail
 ----------------------
 
-Docker images for sending or relaying email.
+Docker image for sending or relaying email.
 
 ## Quick start
 
@@ -9,11 +9,10 @@ Docker images for sending or relaying email.
     docker run --rm tencentafrica/mail-forwarder:latest
     
     # Start a mail server that relays delivery.
-    docker run --rm -e RELAY_HOST="1.2.3.4" -e RELAY_LOGIN="username" -e RELAY_PASSWORD="password" tencentafrica/mail-forwarder:latest
+    docker run --rm -e RELAY=true -e RELAY_HOST="1.2.3.4" -e RELAY_PORT=25 -e RELAY_LOGIN="username" -e RELAY_PASSWORD="password" tencentafrica/mail-forwarder:latest
     
-    # Start a local debug version that relays to itself.
-    docker run --rm tencentafrica/mail:debug
-
+*Useful hint:* When developing locally, it's useful to combine the mail relay capabilities of this image with the mail interface of
+[MailHog](https://github.com/mailhog/MailHog), to ensure that no email is delivered outside of your development server.
 
 ## Configuration
 
