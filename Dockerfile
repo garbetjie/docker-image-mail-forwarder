@@ -1,6 +1,6 @@
 FROM alpine:3.8
 
-ENV DEFAULT_DOMAIN="" \
+ENV DOMAIN="" \
     ALLOWED_SENDERS="" \
     ALLOWED_RECIPIENTS="" \
     RELAY=false \
